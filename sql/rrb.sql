@@ -48,6 +48,7 @@ CREATE TABLE shops (
  name VARCHAR(32) NOT NULL,
  address VARCHAR(128) NOT NULL,
  description VARCHAR(256) NOT NULL,
+ display_url VARCHAE(128) NOT NULL,
  PRIMARY KEY (id)
 );
 CREATE INDEX shops_region_id_index ON shops (region_id);
