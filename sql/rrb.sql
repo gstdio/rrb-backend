@@ -1,5 +1,6 @@
 CREATE DATABASE renrenbuy character set utf8;
-GRANT ALL ON renrenbuy.* TO 'renrenbuytest'@'1.1.1.1' IDENTIFIED BY 'somepassword';
+CREATE USER 'renrenbuytest'@'localhost' IDENTIFIED BY 'somePassword123';
+GRANT ALL ON renrenbuy.* TO 'renrenbuytest'@'localhost';
 FLUSH PRIVILEGES;
 USE renrenbuy;
 CREATE TABLE products (
@@ -48,7 +49,7 @@ CREATE TABLE shops (
  name VARCHAR(32) NOT NULL,
  address VARCHAR(128) NOT NULL,
  description VARCHAR(256) NOT NULL,
- display_url VARCHAE(128) NOT NULL,
+ display_url VARCHAR(128) NOT NULL,
  PRIMARY KEY (id)
 );
 CREATE INDEX shops_region_id_index ON shops (region_id);
