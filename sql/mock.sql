@@ -20,7 +20,7 @@ insert into product_properties (product_id, display_url) values (4, "/display/pr
 
 insert into regions (name, longitude, latitude) values ("北京", 30, 50);
 
-insert into shops (region_id, name, address, description, display_url) values (1, "第一超市", "北京", "只是一家超市", "/display/shop/1.jpg")
+insert into shops (region_id, name, address, description, display_url) values (1, "第一超市", "北京", "只是一家超市", "/display/shop/1.jpg");
 
 insert into sales (product_id, shop_id, price, title, description, create_time) values (1, 1, 10, "便宜苹果", "这是最便宜的苹果", 1539180514);
 insert into sales (product_id, shop_id, price, title, description, create_time) values (2, 1, 10, "便宜橘子", "这是最便宜的橘子", 1539180514);
