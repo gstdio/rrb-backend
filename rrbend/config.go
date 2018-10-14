@@ -1,10 +1,10 @@
-package handler
+package rrbend
 
 import (
 	"fmt"
 	"os"
 	"time"
-	"strings"
+	//"strings"
 	"github.com/gwtony/gapi/config"
 	"github.com/gwtony/gapi/errors"
 )
@@ -53,8 +53,8 @@ func (conf *RrbendConfig) ParseConfig(cf *config.Config) error {
 
 	conf.apiLoc, err = cf.C.GetString("rrbend", "api_location")
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "[Info] [rrbend] Read conf: No api_location, use default location:", DCRON_LOC)
-		conf.apiLoc = DCRON_LOC
+		fmt.Fprintln(os.Stderr, "[Info] [rrbend] Read conf: No api_location, use default location:", RRBEND_LOC)
+		conf.apiLoc = RRBEND_LOC
 	}
 
 	conf.adminToken, err = cf.C.GetString("rrbend", "admin_token")

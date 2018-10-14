@@ -1,4 +1,4 @@
-package handler
+package rrbend
 
 const (
 	// VERSION version
@@ -11,6 +11,11 @@ const (
 
 	//ETCD_CONTENT_HEADER      = "application/x-www-form-urlencoded"
 
-	//http location for project
-	PROJECT_ADD_LOC         = "/project/add"
+	//http location for class
+	CLASS_GETALL_LOC        = "/class/getall"
+	SUBCLASS_GETALL_LOC     = "/subclass/getall"
+	SUBCLASS_GETID_LOC     = "/subclass"
+
+	DEFAULT_RETENTION_TIME  = "1d"
+	RRBEND_LOC              = "/rrbend"
 )

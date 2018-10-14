@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 	"github.com/gwtony/gapi/api"
-	"github.com/gstdio/rrb-backend/handler"
+	"github.com/gstdio/rrb-backend/rrbend"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	config := api.GetConfig()
 	log := api.GetLog()
 
-	err = handler.InitContext(config, log)
+	err = rrbend.InitContext(config, log)
 	if err != nil {
 		fmt.Println("[Error] Init rrbend failed")
 		time.Sleep(time.Second)
