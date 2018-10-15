@@ -7,7 +7,7 @@ import (
 	//"io/ioutil"
 	"encoding/json"
 	"net/http"
-	"net/url"
+	//"net/url"
 	"github.com/gwtony/gapi/log"
 	//"github.com/gwtony/gapi/utils"
 	"github.com/gwtony/gapi/api"
@@ -29,9 +29,6 @@ func (h *ClassGetAllHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.Log.Info("Get class request from client: %s", r.RemoteAddr)
-	u, _ := url.Parse(r.URL.String())
-    values, _ := url.ParseQuery(u.RawQuery)
-	h.Log.Debug(values)
 
 	result, err := h.Mc.GetAllClass()
 	//err := json.Unmarshal(result, &data)

@@ -6,8 +6,8 @@ import (
 	"strconv"
 	//"io/ioutil"
 	"encoding/json"
-	"net/http"
 	"net/url"
+	"net/http"
 	"github.com/gwtony/gapi/log"
 	"github.com/gwtony/gapi/api"
 	"github.com/gwtony/gapi/errors"
@@ -30,9 +30,6 @@ func (h *SubClassGetAllHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	}
 
 	h.Log.Info("Get subclass request from client: %s", r.RemoteAddr)
-	u, _ := url.Parse(r.URL.String())
-    values, _ := url.ParseQuery(u.RawQuery)
-	h.Log.Debug(values)
 
 	result, err := h.Mc.GetAllSubClass()
 	//err := json.Unmarshal(result, &data)

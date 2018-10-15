@@ -32,7 +32,9 @@ func InitContext(conf *config.Config, log log.Log) error {
 
 	api.AddHttpHandler(apiLoc + CLASS_GETALL_LOC, &handler.ClassGetAllHandler{Mc: mc, Log: log})
 	api.AddHttpHandler(apiLoc + SUBCLASS_GETALL_LOC, &handler.SubClassGetAllHandler{Mc: mc, Log: log})
-	api.AddHttpHandler(apiLoc + SUBCLASS_GETID_LOC, &handler.SubClassGetByClassIdHandler{Mc: mc, Log: log})
+	api.AddHttpHandler(apiLoc + SUBCLASS_GETBY_CLASSID_LOC, &handler.SubClassGetByClassIdHandler{Mc: mc, Log: log})
+	api.AddHttpHandler(apiLoc + PRODUCT_GETBY_SUBCLASSID_LOC, &handler.ProductGetBySubClassIdHandler{Mc: mc, Log: log})
+	api.AddHttpHandler(apiLoc + PRODUCT_GETBY_SHOPID_LOC, &handler.ProductGetByShopIdHandler{Mc: mc, Log: log})
 
 	return nil
 }
