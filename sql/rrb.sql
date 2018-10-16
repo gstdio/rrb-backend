@@ -8,6 +8,7 @@ CREATE TABLE products (
  subclass_id INT NOT NULL,
  name VARCHAR(32) NOT NULL,
  description VARCHAR(128) NOT NULL,
+ display_url VARCHAR(128) NOT NULL,
  PRIMARY KEY (id)
 );
 CREATE INDEX products_subclass_id_index ON products (subclass_id);
@@ -29,17 +30,11 @@ CREATE TABLE subclasses (
 );
 CREATE INDEX subclasses_class_id_index ON subclasses (class_id);
 
-CREATE TABLE product_properties (
- product_id INT NOT NULL,
- display_url VARCHAR(128) NOT NULL,
- PRIMARY KEY (product_id)
-);
-
 CREATE TABLE regions (
  id INT AUTO_INCREMENT,
  name VARCHAR(32) NOT NULL,
- longitude INT NOT NULL,
- latitude INT NOT NULL,
+ longitude DOUBLE NOT NULL,
+ latitude DOUBLE NOT NULL,
  PRIMARY KEY (id)
 );
 
@@ -58,7 +53,7 @@ CREATE TABLE sales (
  id INT AUTO_INCREMENT,
  product_id INT NOT NULL,
  shop_id INT NOT NULL,
- price INT NOT NULL,
+ price DOUBLE NOT NULL,
  title VARCHAR(32),
  description VARCHAR(128),
  create_time INT NOT NULL,
