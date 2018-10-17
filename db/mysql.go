@@ -68,56 +68,42 @@ func (mc *MysqlContext) QueryRead(callBack func(*sql.Rows)(interface{}, error), 
 	return callBack(rows)
 }
 
-//func (mc *MysqlContext) QueryInsert(runid, result string, create_time int) error {
-//	return mc.QueryWrite(DCRON_INSERT_SQL, runid, result, create_time)
-//}
-//
-//func (mc *MysqlContext) QueryWrite(query string, args ...interface{}) error {
-//	res, err := mc.db.Exec(query, args...)
-//
-//	if err != nil {
-//		mc.log.Error("Execute write sql: ", query, args, " failed: ", err)
-//		return errors.BadGatewayError
-//	}
-//	affected, err := res.RowsAffected()
-//	if err != nil {
-//		mc.log.Error("Get rows affected failed: %s", err)
-//		return errors.InternalServerError
-//	}
-//	if int(affected) <= 0 {
-//		return errors.BadGatewayError
-//	}
-//
-//	return nil
-//}
-//
-//func (mc *MysqlContext) QueryUpdate(runid, result string, create_time int) error {
-//	if runid == "" {
-//		return errors.BadRequestError
-//	}
-//
-//	res, err := mc.db.Exec(DCRON_UPDATE_SQL, result, create_time, runid)
-//
-//	if err != nil {
-//		mc.log.Error("Execute update result for runid: %s failed: %s", runid, err)
-//		return errors.BadGatewayError
-//	}
-//
-//	affected, err := res.RowsAffected()
-//	if err != nil {
-//		mc.log.Error("Get rows affected failed: %s", err)
-//		return errors.InternalServerError
-//	}
-//
-//	if int(affected) > 0 {
-//		return nil
-//	}
-//
-//	mc.log.Info("No such runid: %s", runid)
-//	return errors.NoContentError
-//}
-//
-//func (mc *MysqlContext) QueryDelete(create_time int) error {
-//	return mc.QueryWrite(DCRON_DELETE_SQL, create_time)
-//}
+func (mc *MysqlContext) QueryWrite(query string, args ...interface{}) error {
+	res, err := mc.db.Exec(query, args...)
 
+	if err != nil {
+		mc.log.Error("Execute write sql: ", query, args, " failed: ", err)
+		return errors.BadGatewayError
+	}
+	affected, err := res.RowsAffected()
+	if err != nil {
+		mc.log.Error("Write get rows affected failed: %s", err)
+		return errors.InternalServerError
+	}
+	if int(affected) <= 0 {
+		return errors.BadGatewayError
+	}
+
+	return nil
+}
+
+func (mc *MysqlContext) QueryUpdate(query string, args ...interface{}) error {
+	res, err := mc.db.Exec(query, args...)
+
+	if err != nil {
+		mc.log.Error("Execute update sql: ", query, args, " failed: ", err)
+		return errors.BadGatewayError
+	}
+
+	affected, err := res.RowsAffected()
+	if err != nil {
+		mc.log.Error("Update get rows affected failed: %s", err)
+		return errors.InternalServerError
+	}
+
+	if int(affected) > 0 {
+		return nil
+	}
+
+	return errors.NoContentError
+}

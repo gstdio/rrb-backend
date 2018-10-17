@@ -5,7 +5,7 @@ import (
 	"github.com/gstdio/rrb-backend/structs"
 )
 
-func (mc *MysqlContext) GetAllSubClass() ([]structs.SubClass, error) {
+func (mc *MysqlContext) SubClassGetAll() ([]structs.SubClass, error) {
 	result, err := mc.QueryRead(parseSubClass, SUBCLASS_GETALL_SQL)
 	if err != nil {
 		return nil, err
@@ -17,7 +17,7 @@ func (mc *MysqlContext) GetAllSubClass() ([]structs.SubClass, error) {
 	}
 }
 
-func (mc *MysqlContext) GetSubClassByClassId(id int) ([]structs.SubClass, error) {
+func (mc *MysqlContext) SubClassGetByClassId(id int) ([]structs.SubClass, error) {
 	result, err := mc.QueryRead(parseSubClass, SUBCLASS_GETBY_CLASSID_SQL, id)
 	if err != nil {
 		return nil, err
@@ -43,4 +43,12 @@ func parseSubClass(rows *sql.Rows) (interface{}, error) {
 		classArr = append(classArr, c)
 	}
 	return classArr, nil
+}
+
+func (mc *MysqlContext) SubClassInsert(c *structs.SubClass) error {
+	return mc.QueryWrite(SUBCLASS_INSERT_SQL, c.ClassId, c.Name, c.Desc)
+}
+
+func (mc *MysqlContext) SubClassUpdate(c *structs.SubClass) error {
+	return mc.QueryWrite(SUBCLASS_UPDATE_SQL, c.ClassId, c.Name, c.Desc, c.Id)
 }

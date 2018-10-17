@@ -5,7 +5,7 @@ import (
 	"github.com/gstdio/rrb-backend/structs"
 )
 
-func (mc *MysqlContext) GetAllClass() ([]structs.Class, error) {
+func (mc *MysqlContext) ClassGetAll() ([]structs.Class, error) {
 	result, err := mc.QueryRead(parseClass, CLASS_GETALL_SQL)
 	if err != nil {
 		return nil, err
@@ -31,4 +31,12 @@ func parseClass(rows *sql.Rows) (interface{}, error) {
 		classArr = append(classArr, c)
 	}
 	return classArr, nil
+}
+
+func (mc *MysqlContext) ClassInsert(c *structs.Class) error {
+	return mc.QueryWrite(CLASS_INSERT_SQL, c.Name, c.Desc)
+}
+
+func (mc *MysqlContext) ClassUpdate(c *structs.Class) error {
+	return mc.QueryWrite(CLASS_UPDATE_SQL, c.Name, c.Desc, c.Id)
 }
