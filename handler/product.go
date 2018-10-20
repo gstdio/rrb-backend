@@ -1,7 +1,6 @@
 package handler
 import (
 	"strconv"
-	"io/ioutil"
 	"encoding/json"
 	"net/url"
 	"net/http"
@@ -21,11 +20,18 @@ type ProductGetByShopIdHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
+
 type ProductInsertHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
+
 type ProductUpdateHandler struct {
+	Mc  *db.MysqlContext
+	Log log.Log
+}
+
+type ProductDeleteHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
@@ -109,19 +115,13 @@ func (h *ProductInsertHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	result, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Read from body failed"), errors.BadRequestError, h.Log)
-		return
-	}
-	r.Body.Close()
-
 	data := &structs.Product{}
-	err = json.Unmarshal(result, &data)
+	msg, err := parseBody(r, data)
 	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Parse from body failed"), errors.BadRequestError, h.Log)
+		api.ReturnError(r, w, msg, err, h.Log)
 		return
 	}
+
 	h.Log.Info("Insert product request from client: %s", r.RemoteAddr)
 
 	err = h.Mc.ProductInsert(data)
@@ -139,24 +139,42 @@ func (h *ProductUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	result, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Read from body failed"), errors.BadRequestError, h.Log)
-		return
-	}
-	r.Body.Close()
-
 	data := &structs.Product{}
-	err = json.Unmarshal(result, &data)
+	msg, err := parseBody(r, data)
 	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Parse from body failed"), errors.BadRequestError, h.Log)
+		api.ReturnError(r, w, msg, err, h.Log)
 		return
 	}
+
 	h.Log.Info("Insert product request from client: %s", r.RemoteAddr)
 
 	err = h.Mc.ProductUpdate(data)
 	if err != nil {
 		api.ReturnError(r, w, errors.Jerror("Update product failed"), errors.BadGatewayError, h.Log)
+		return
+	}
+
+	api.ReturnResponse(r, w, "", h.Log)
+}
+
+func (h *ProductDeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		api.ReturnError(r, w, errors.Jerror("Method invalid"), errors.BadRequestError, h.Log)
+		return
+	}
+
+	data := &structs.Product{}
+	msg, err := parseBody(r, data)
+	if err != nil {
+		api.ReturnError(r, w, msg, err, h.Log)
+		return
+	}
+
+	h.Log.Info("Delete product request from client: %s", r.RemoteAddr)
+
+	err = h.Mc.ProductDelete(data)
+	if err != nil {
+		api.ReturnError(r, w, errors.Jerror("Delete product failed"), errors.BadGatewayError, h.Log)
 		return
 	}
 

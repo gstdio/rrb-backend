@@ -8,7 +8,7 @@ CREATE TABLE products (
  subclass_id INT NOT NULL,
  name VARCHAR(32) NOT NULL,
  description VARCHAR(128) NOT NULL,
- display_url VARCHAR(128) NOT NULL,
+ url VARCHAR(128) NOT NULL,
  PRIMARY KEY (id)
 );
 CREATE INDEX products_subclass_id_index ON products (subclass_id);
@@ -44,7 +44,7 @@ CREATE TABLE shops (
  name VARCHAR(32) NOT NULL,
  address VARCHAR(128) NOT NULL,
  description VARCHAR(256) NOT NULL,
- display_url VARCHAR(128) NOT NULL,
+ url VARCHAR(128) NOT NULL,
  PRIMARY KEY (id)
 );
 CREATE INDEX shops_region_id_index ON shops (region_id);

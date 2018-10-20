@@ -40,3 +40,7 @@ func (mc *MysqlContext) ClassInsert(c *structs.Class) error {
 func (mc *MysqlContext) ClassUpdate(c *structs.Class) error {
 	return mc.QueryWrite(CLASS_UPDATE_SQL, c.Name, c.Desc, c.Id)
 }
+
+func (mc *MysqlContext) ClassDelete(c *structs.Class) error {
+	return mc.QueryWrite(CLASS_DELETE_SQL, c.Id)
+}

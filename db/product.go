@@ -68,3 +68,7 @@ func (mc *MysqlContext) ProductInsert(c *structs.Product) error {
 func (mc *MysqlContext) ProductUpdate(c *structs.Product) error {
 	return mc.QueryWrite(PRODUCT_UPDATE_SQL, c.SubClassId, c.Name, c.Desc, c.Url, c.Id)
 }
+
+func (mc *MysqlContext) ProductDelete(c *structs.Product) error {
+	return mc.QueryWrite(PRODUCT_DELETE_SQL, c.Id)
+}

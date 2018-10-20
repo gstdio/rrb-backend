@@ -52,3 +52,7 @@ func (mc *MysqlContext) SubClassInsert(c *structs.SubClass) error {
 func (mc *MysqlContext) SubClassUpdate(c *structs.SubClass) error {
 	return mc.QueryWrite(SUBCLASS_UPDATE_SQL, c.ClassId, c.Name, c.Desc, c.Id)
 }
+
+func (mc *MysqlContext) SubClassDelete(c *structs.SubClass) error {
+	return mc.QueryWrite(SUBCLASS_DELETE_SQL, c.Id)
+}

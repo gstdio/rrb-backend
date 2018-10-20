@@ -1,7 +1,7 @@
 package handler
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 	"github.com/gwtony/gapi/log"
 	"github.com/gwtony/gapi/api"
 	"github.com/gwtony/gapi/errors"
@@ -9,40 +9,36 @@ import (
 	"github.com/gstdio/rrb-backend/structs"
 )
 
-type ClassGetAllHandler struct {
+type ShopGetAllHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
 
-type ClassInsertHandler struct {
+type ShopInsertHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
 
-type ClassUpdateHandler struct {
+type ShopUpdateHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
 
-type ClassDeleteHandler struct {
+type ShopDeleteHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
 
-func (h *ClassGetAllHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	//admin := false
-
+func (h *ShopGetAllHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		api.ReturnError(r, w, errors.Jerror("Method invalid"), errors.BadRequestError, h.Log)
 		return
 	}
 
-	h.Log.Info("Get class request from client: %s", r.RemoteAddr)
-
-	result, err := h.Mc.ClassGetAll()
-	//err := json.Unmarshal(result, &data)
+	h.Log.Info("Get shop request from client: %s", r.RemoteAddr)
+	result, err := h.Mc.ShopGetAll()
 	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Get class failed"), errors.BadGatewayError, h.Log)
+		api.ReturnError(r, w, errors.Jerror("Get shop failed"), errors.BadGatewayError, h.Log)
 		return
 	}
 
@@ -51,24 +47,22 @@ func (h *ClassGetAllHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	api.ReturnResponse(r, w, string(rv), h.Log)
 }
 
-func (h *ClassInsertHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	//admin := false
-
+func (h *ShopInsertHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		api.ReturnError(r, w, errors.Jerror("Method invalid"), errors.BadRequestError, h.Log)
 		return
 	}
 
-	data := &structs.Class{}
+	data := &structs.Shop{}
 	msg, err := parseBody(r, data)
 	if err != nil {
 		api.ReturnError(r, w, msg, err, h.Log)
 		return
 	}
 
-	h.Log.Info("Insert class request from client: %s", r.RemoteAddr)
+	h.Log.Info("Insert shop request from client: %s", r.RemoteAddr)
 
-	err = h.Mc.ClassInsert(data)
+	err = h.Mc.ShopInsert(data)
 	if err != nil {
 		api.ReturnError(r, w, errors.Jerror("Insert class failed"), errors.BadGatewayError, h.Log)
 		return
@@ -77,50 +71,48 @@ func (h *ClassInsertHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	api.ReturnResponse(r, w, "", h.Log)
 }
 
-func (h *ClassUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	//admin := false
-
+func (h *ShopUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		api.ReturnError(r, w, errors.Jerror("Method invalid"), errors.BadRequestError, h.Log)
 		return
 	}
 
-	data := &structs.Class{}
+	data := &structs.Shop{}
 	msg, err := parseBody(r, data)
 	if err != nil {
 		api.ReturnError(r, w, msg, err, h.Log)
 		return
 	}
 
-	h.Log.Info("Insert class request from client: %s", r.RemoteAddr)
+	h.Log.Info("Insert shop request from client: %s", r.RemoteAddr)
 
-	err = h.Mc.ClassUpdate(data)
+	err = h.Mc.ShopUpdate(data)
 	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Update class failed"), errors.BadGatewayError, h.Log)
+		api.ReturnError(r, w, errors.Jerror("Update shop failed"), errors.BadGatewayError, h.Log)
 		return
 	}
 
 	api.ReturnResponse(r, w, "", h.Log)
 }
 
-func (h *ClassDeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *ShopDeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		api.ReturnError(r, w, errors.Jerror("Method invalid"), errors.BadRequestError, h.Log)
 		return
 	}
 
-	data := &structs.Class{}
+	data := &structs.Shop{}
 	msg, err := parseBody(r, data)
 	if err != nil {
 		api.ReturnError(r, w, msg, err, h.Log)
 		return
 	}
 
-	h.Log.Info("Delete class request from client: %s", r.RemoteAddr)
+	h.Log.Info("Delete shop request from client: %s", r.RemoteAddr)
 
-	err = h.Mc.ClassDelete(data)
+	err = h.Mc.ShopDelete(data)
 	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Delete class failed"), errors.BadGatewayError, h.Log)
+		api.ReturnError(r, w, errors.Jerror("Delete shop failed"), errors.BadGatewayError, h.Log)
 		return
 	}
 

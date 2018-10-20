@@ -8,14 +8,14 @@ insert into subclasses (class_id, name, description) values (1, "进口水果", 
 insert into subclasses (class_id, name, description) values (2, "时令蔬菜", "basic");
 insert into subclasses (class_id, name, description) values (2, "精品蔬菜", "advanced");
 
-insert into products (subclass_id, name, description, display_url) values (1, "苹果", "pingguo", "/display/product/1.jpg");
-insert into products (subclass_id, name, description, display_url) values (2, "橘子", "juzi", "/display/product/2.jpg");
-insert into products (subclass_id, name, description, display_url) values (3, "白菜", "baicai", "/display/product/3.jpg");
-insert into products (subclass_id, name, description, display_url) values (4, "萝卜", "luobu", "/display/product/4.jpg");
+insert into products (subclass_id, name, description, url) values (1, "苹果", "pingguo", "/display/product/1.jpg");
+insert into products (subclass_id, name, description, url) values (2, "橘子", "juzi", "/display/product/2.jpg");
+insert into products (subclass_id, name, description, url) values (3, "白菜", "baicai", "/display/product/3.jpg");
+insert into products (subclass_id, name, description, url) values (4, "萝卜", "luobu", "/display/product/4.jpg");
 
 insert into regions (name, longitude, latitude) values ("北京", 30.1, 50.1);
 
-insert into shops (region_id, name, address, description, display_url) values (1, "第一超市", "北京", "只是一家超市", "/display/shop/1.jpg");
+insert into shops (region_id, name, address, description, url) values (1, "第一超市", "北京", "只是一家超市", "/display/shop/1.jpg");
 
 insert into sales (product_id, shop_id, price, title, description, create_time) values (1, 1, 10, "便宜苹果", "这是最便宜的苹果", 1539180514);
 insert into sales (product_id, shop_id, price, title, description, create_time) values (2, 1, 10, "便宜橘子", "这是最便宜的橘子", 1539180514);

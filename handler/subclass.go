@@ -1,10 +1,6 @@
 package handler
 import (
-	//"fmt"
-	//"time"
-	//"strings"
 	"strconv"
-	"io/ioutil"
 	"encoding/json"
 	"net/url"
 	"net/http"
@@ -19,15 +15,23 @@ type SubClassGetAllHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
+
 type SubClassGetByClassIdHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
+
 type SubClassInsertHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
+
 type SubClassUpdateHandler struct {
+	Mc  *db.MysqlContext
+	Log log.Log
+}
+
+type SubClassDeleteHandler struct {
 	Mc  *db.MysqlContext
 	Log log.Log
 }
@@ -97,19 +101,13 @@ func (h *SubClassInsertHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	result, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Read from body failed"), errors.BadRequestError, h.Log)
-		return
-	}
-	r.Body.Close()
-
 	data := &structs.SubClass{}
-	err = json.Unmarshal(result, &data)
+	msg, err := parseBody(r, data)
 	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Parse from body failed"), errors.BadRequestError, h.Log)
+		api.ReturnError(r, w, msg, err, h.Log)
 		return
 	}
+
 	h.Log.Info("Insert subclass request from client: %s", r.RemoteAddr)
 
 	err = h.Mc.SubClassInsert(data)
@@ -127,24 +125,42 @@ func (h *SubClassUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	result, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Read from body failed"), errors.BadRequestError, h.Log)
-		return
-	}
-	r.Body.Close()
-
 	data := &structs.SubClass{}
-	err = json.Unmarshal(result, &data)
+	msg, err := parseBody(r, data)
 	if err != nil {
-		api.ReturnError(r, w, errors.Jerror("Parse from body failed"), errors.BadRequestError, h.Log)
+		api.ReturnError(r, w, msg, err, h.Log)
 		return
 	}
+
 	h.Log.Info("Update class request from client: %s", r.RemoteAddr)
 
 	err = h.Mc.SubClassUpdate(data)
 	if err != nil {
 		api.ReturnError(r, w, errors.Jerror("Update subclass failed"), errors.BadGatewayError, h.Log)
+		return
+	}
+
+	api.ReturnResponse(r, w, "", h.Log)
+}
+
+func (h *SubClassDeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		api.ReturnError(r, w, errors.Jerror("Method invalid"), errors.BadRequestError, h.Log)
+		return
+	}
+
+	data := &structs.SubClass{}
+	msg, err := parseBody(r, data)
+	if err != nil {
+		api.ReturnError(r, w, msg, err, h.Log)
+		return
+	}
+
+	h.Log.Info("Delete class request from client: %s", r.RemoteAddr)
+
+	err = h.Mc.SubClassDelete(data)
+	if err != nil {
+		api.ReturnError(r, w, errors.Jerror("Delete subclass failed"), errors.BadGatewayError, h.Log)
 		return
 	}
 
